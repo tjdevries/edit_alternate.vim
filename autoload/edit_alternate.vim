@@ -9,6 +9,15 @@ function! edit_alternate#set_no_debug() abort
     let s:debug = v:false
 endfunction
 " }}}
+" Option configuration {{{
+let s:options = {
+      \ 'file_print': v:true,
+      \ }
+
+function! edit_alternate#set_opt_file_print(status) abort
+  let s:options['file_print'] = status
+endfunction
+" }}}
 
 ""
 " Helper function to update the configuration
@@ -51,8 +60,12 @@ function! edit_alternate#switch() abort
   endif
 
   if bufnr(alternate_name) > 0
-    execute(':buffer ' . bufnr(alternate_name))
+    execute(':silent buffer ' . bufnr(alternate_name))
   else
-    execute(':e ' . alternate_name)
+    execute(':silent edit ' . alternate_name)
+  endif
+
+  if s:options['file_print']
+    file!
   endif
 endfunction
