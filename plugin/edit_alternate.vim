@@ -5,6 +5,12 @@ let g:alternate_configuration = {
       \ 'executable_name': v:true,
       \ 'alternate_name': "expand('%:r') . '.' . alternate_extension",
       \ },
+    \ 'cpp': {
+      \ 'executable_extension': v:true,
+      \ 'alternate_extension': 'edit_alternate#util#h_or_hpp_header()',
+      \ 'executable_name': v:true,
+      \ 'alternate_name': "expand('%:r') . '.' . alternate_extension",
+      \ },
     \ 'h': {
       \ 'executable_extension': v:true,
       \ 'alternate_extension': 'edit_alternate#util#c_or_cpp_header()',
