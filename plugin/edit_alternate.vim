@@ -7,7 +7,7 @@ let g:alternate_configuration = {
       \ },
     \ 'h': {
       \ 'executable_extension': v:true,
-      \ 'alternate_extension': 'call edit_alternate#util#c_or_cpp_header()',
+      \ 'alternate_extension': 'edit_alternate#util#c_or_cpp_header()',
       \ 'executable_name': v:true,
       \ 'alternate_name': "expand('%:r') . '.' . alternate_extension",
       \ },

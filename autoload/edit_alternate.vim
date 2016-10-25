@@ -32,7 +32,7 @@ function! edit_alternate#switch() abort
   " If a command is specified, run it.
   " Else, we just take the value
   if has_key(configuration, 'executable_extension') && configuration['executable_extension']
-    execute(':echon ' . configuration['alternate_extension'])
+    let alternate_extension = execute(':echon ' . configuration['alternate_extension'])
   else
     let alternate_extension = configuration['alternate_extension']
   endif

@@ -4,8 +4,8 @@
 " Assumes you are using a .h file
 function! edit_alternate#util#c_or_cpp_header() abort
   if filereadable(expand('%:r' . '.cpp'))
-    echon 'cpp'
+    return 'cpp'
   else
-    echon 'c'
+    return 'c'
   endif
 endfunction
