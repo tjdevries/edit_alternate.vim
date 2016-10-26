@@ -1,21 +1,19 @@
-" Debug configuration {{{
-let s:debug = v:false
-
-function! edit_alternate#set_debug() abort
-    let s:debug = v:true
-endfunction
-
-function! edit_alternate#set_no_debug() abort
-    let s:debug = v:false
-endfunction
-" }}}
 " Option configuration {{{
 let s:options = {
       \ 'file_print': v:true,
+      \ 'debug': v:false,
       \ }
 
 function! edit_alternate#set_opt_file_print(status) abort
   let s:options['file_print'] = status
+endfunction
+
+function! edit_alternate#set_debug() abort
+    let s:options['debug'] = v:true
+endfunction
+
+function! edit_alternate#set_no_debug() abort
+    let s:options['debug'] = v:false
 endfunction
 " }}}
 
@@ -52,7 +50,7 @@ function! edit_alternate#switch() abort
     let alternate_name = configuration['alternate_name']
   endif
 
-  if s:debug
+  if s:options['debug']
     echom 'new_run'
     echom 'Ext : ' . alternate_extension
     echom 'Name: ' . alternate_name
