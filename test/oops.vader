@@ -1,0 +1,9 @@
+Execute (Test oops with fine file):
+  let oops_file = 'this.py'
+  AssertEqual '', edit_alternate#oops(oops_file, [])
+
+Execute (Test oops one file):
+  let oops_name = 'file.'
+  let oops_list = ['this_file.c', 'file', 'file.c', 'another thing', '/weird/tha$']
+
+  AssertEqual ['file.c'], edit_alternate#oops(oops_name, oops_list)
