@@ -1,9 +1,38 @@
 Execute (Test oops with fine file):
   let oops_file = 'this.py'
-  AssertEqual '', edit_alternate#oops(oops_file, [])
+  AssertEqual [], edit_alternate#oops(oops_file, [])
 
 Execute (Test oops one file):
   let oops_name = 'file.'
   let oops_list = ['this_file.c', 'file', 'file.c', 'another thing', '/weird/tha$']
 
-  AssertEqual ['file.c'], edit_alternate#oops(oops_name, oops_list)
+  let potential_oops = edit_alternate#oops(oops_name, oops_list)
+  AssertEqual ['file.c'], potential_oops
+  AssertEqual 'file.c', edit_alternate#choose_oops(potential_oops, g:edit_alternate_file_list)
+
+Execute (Test oops two files):
+  let oops_name = 'file.'
+  let oops_list = ['this_file.c', 'file.h', 'file', 'file.c', 'another thing', '/weird/tha$']
+
+  let potential_oops = edit_alternate#oops(oops_name, oops_list)
+  AssertEqual ['file.h', 'file.c'], potential_oops
+  AssertEqual 'file.c', edit_alternate#choose_oops(potential_oops, g:edit_alternate_file_list)
+
+Execute (File not in alternate list):
+  AssertEqual 'other_file.py', edit_alternate#choose_oops(['other_file.py'], g:edit_alternate_file_list)
+
+Execute (Test with long paths):
+  let oops_name = '/tmp/file.'
+  let oops_list = [
+    \ '/not_tmp/this_file.c',
+    \ '/not_tmp/file.h',
+    \ '/tmp/file.h',
+    \ '/tmp/file',
+    \ '/tmp/file.c',
+    \ 'another thing',
+    \ '/weird/tha$'
+    \ ]
+
+  let potential_oops = edit_alternate#oops(oops_name, oops_list)
+  AssertEqual ['/tmp/file.h', '/tmp/file.c'], potential_oops
+  AssertEqual '/tmp/file.c', edit_alternate#choose_oops(potential_oops, g:edit_alternate_file_list)

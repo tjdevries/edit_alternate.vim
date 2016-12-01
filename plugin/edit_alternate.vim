@@ -20,3 +20,4 @@ let g:alternate_configuration = {
     \ }
 
 command! EditAlternate :call edit_alternate#switch()
+command! EditOops :call edit_alternate#fix_oops()

@@ -15,6 +15,14 @@ endfunction
 function! edit_alternate#set_no_debug() abort
     let s:options['debug'] = v:false
 endfunction
+
+" The order in which you will open oops files
+let g:edit_alternate_file_list = get(g:, 'edit_alternate_file_list', [
+      \ '.c',
+      \ '.cpp',
+      \ '.h',
+      \ '.py',
+      \ ])
 " }}}
 
 ""
@@ -74,7 +82,7 @@ function! edit_alternate#oops(filename, directory_list) abort
   " If it doesn't end with a period, just ignore this.
   " Maybe later add some abilty to have a list of these?
   if a:filename[len(a:filename) - 1] !=# '.'
-    return ''
+    return []
   endif
 
   let l:possible_results = []
@@ -91,6 +99,37 @@ let s:ending_rankings = [
       \ '.c',
       \ ]
 
-function! edit_alternate#choose_oops(filename, file_options) abort
-  
+function! edit_alternate#choose_oops(file_list, file_options) abort
+  if len(a:file_list) == 1
+    return a:file_list[0]
+  endif
+
+  for l:ending in g:edit_alternate_file_list
+    for l:filename in a:file_list
+      if matchstr(l:filename, l:ending . '$') !=# ''
+        return l:filename
+      endif
+    endfor
+  endfor
+
+  return ''  
+endfunction
+
+function! edit_alternate#fix_oops() abort
+  let l:potential_oops = edit_alternate#oops(
+        \ expand('%:p'),
+        \ split(glob(expand('%:p:h') . '/*'))
+        \ )
+
+  if len(potential_oops) > 0
+    let l:chosen = edit_alternate#choose_oops(potential_oops, g:edit_alternate_file_list)
+
+    if l:chosen !=# ''
+      if bufnr(substitute(l:chosen, getcwd() . '/', '', 'g')) > 0
+        execute ':silent buffer ' . bufnr(substitute(l:chosen, getcwd() . '/', '', 'g'))
+      else
+        execute ':silent e ' . l:chosen
+      endif
+    endif
+  endif
 endfunction
