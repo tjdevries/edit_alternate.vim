@@ -16,14 +16,34 @@ nnoremap <leader>ea :EditAlternate<CR>
 
 ### Nonexistent Files
 
-Many times while editting, I'll do something like:
+Consider:
 
-`:e mydir/my_fi<TAB>`
+```
+my_folder/
+-> main.c
+-> util.c
+-> util.h
+```
 
-and it will complete to:
+You now run the command
 
-`:e mydir/my_file.`
+```
+:e my_folder/ut<TAB>
+```
+
+You'll get completed
+
+```
+:e my_folder/util.
+```
 
 because there is a `.c` and a `.h` file in the same directory... but I'll just press enter right away anyway.
+
+Now, you can just do:
+
+```vim
+" :EditOops
+nnoremap <leader>eo :EditOops<CR>
+```
 
 This will make it so that you default open the `.c` file instead.
