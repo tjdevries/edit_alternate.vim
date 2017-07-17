@@ -22,7 +22,7 @@ endfunction
 
 
 function! edit_alternate#util#change_folder(filename, folder, extension) abort
-  return fnamemodify(fnamemodify(a:filename, ':h'), ':h')
+  return fnamemodify(a:filename, ':h:h'),
         \ . '/' . a:folder . '/'
         \ . fnamemodify(a:filename, ':t:r') . '.' . a:extension
 endfunction

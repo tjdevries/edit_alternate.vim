@@ -46,7 +46,10 @@ function! edit_alternate#switch() abort
       let current_name = Rule(expand('%:p'))
     endif
 
-    echo '[EditAlternate] Attempt: ' . current_name
+    if s:options['debug']
+      echo '[EditAlternate] Attempt: ' . current_name
+    endif
+
     if !filereadable(current_name)
       continue
     endif
