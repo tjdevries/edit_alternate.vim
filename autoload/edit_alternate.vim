@@ -36,44 +36,43 @@ endfunction
 function! edit_alternate#switch() abort
   let l:current_extension = expand('%:e')
 
-  if has_key(g:alternate_configuration, l:current_extension)
-    let l:configuration = g:alternate_configuration[l:current_extension]
-  else
-    " Clear the command prompt
-    echo ''
-    return
-  endif
+  let l:configuration = edit_alternate#rule#get(l:current_extension)
 
-  " If a command is specified, run it.
-  " Else, we just take the value
-  if has_key(l:configuration, 'executable_extension') && l:configuration['executable_extension']
-    let l:alternate_extension = execute(':echon ' . l:configuration['alternate_extension'])
-  else
-    let l:alternate_extension = l:configuration['alternate_extension']
-  endif
+  for Rule in l:configuration
+    let current_name = ''
 
-  if has_key(l:configuration, 'executable_name') && l:configuration['executable_name']
-    let l:alternate_name = execute(':echon ' . l:configuration['alternate_name'])
-  else
-    let l:alternate_name = l:configuration['alternate_name']
-  endif
+    " TODO: Support other options?
+    if type(Rule) == v:t_func
+      let current_name = Rule(expand('%:p'))
+    endif
 
-  if s:options['debug']
-    echom 'new_run'
-    echom 'Ext : ' . l:alternate_extension
-    echom 'Name: ' . l:alternate_name
-    echom 'Bufn: ' . bufnr(l:alternate_name)
-  endif
+    echo '[EditAlternate] Attempt: ' . current_name
+    if !filereadable(current_name)
+      continue
+    endif
 
-  if bufnr(l:alternate_name) > 0
-    execute(':silent buffer ' . bufnr(l:alternate_name))
-  else
-    execute(':silent edit ' . l:alternate_name)
-  endif
+    let alternate_name = current_name
 
-  if s:options['file_print']
-    file!
-  endif
+    if s:options['debug']
+      echo '[EditAlternate] Chosen:'
+      echo 'Name: ' . alternate_name
+      echo 'Bufn: ' . bufnr(alternate_name)
+    endif
+
+    if bufnr(alternate_name) > 0
+      execute(':silent buffer ' . bufnr(alternate_name))
+    else
+      execute(':silent edit ' . alternate_name)
+    endif
+
+    if s:options['file_print']
+      file!
+    endif
+
+    return alternate_name
+  endfor
+
+  echo '[EditAlternate] No applicable rules found for ' . l:current_extension
 endfunction
 
 ""
