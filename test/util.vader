@@ -1,0 +1,2 @@
+Execute (Test basic util functions):
+  AssertEqual '.h',edit_alternate#util#h_or_hpp_header('file.c')
