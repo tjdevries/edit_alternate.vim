@@ -1,0 +1,84 @@
+Before (Clear variables):
+  " Clear all the rules, just in case
+  call edit_alternate#rule#reset()
+
+Execute (Test adding rules):
+  " Want to make sure we add rules to an extension dictionary
+  let LambdaFunc = {f -> f}
+  call edit_alternate#rule#add('c', LambdaFunc)
+
+  " Internal assertion
+  AssertEqual [LambdaFunc], edit_alternate#rule#__get_rules()['c']
+
+  " External assertion
+  AssertEqual [LambdaFunc], edit_alternate#rule#get('c')
+
+Execute (Adding rules as a list):
+  " Want to make sure we add rules to an extension dictionary
+  let LambdaFunc = {f -> f}
+  call edit_alternate#rule#add(['c', 'cpp'], LambdaFunc)
+
+  " Using get(..)
+  AssertEqual [LambdaFunc], edit_alternate#rule#get('c')
+  AssertEqual [LambdaFunc], edit_alternate#rule#get('cpp')
+
+Execute (Removing rules):
+  let LambdaFunc = {f -> f}
+  call edit_alternate#rule#add('c', LambdaFunc)
+  call edit_alternate#rule#add('cpp', LambdaFunc)
+
+  " Using get(..)
+  AssertEqual [LambdaFunc], edit_alternate#rule#get('c')
+  AssertEqual [LambdaFunc], edit_alternate#rule#get('cpp')
+
+  " Clear the rule
+  call edit_alternate#rule#clear('c')
+  AssertEqual [], edit_alternate#rule#get('c')
+
+  " cpp should still have the rule
+  AssertEqual [LambdaFunc], edit_alternate#rule#get('cpp')
+
+
+Execute (Add a named rule):
+  let LambdaFunc = {f -> f}
+  call edit_alternate#rule#add('c', LambdaFunc, 'test_rule')
+
+  " Using get(..)
+  AssertEqual [LambdaFunc], edit_alternate#rule#get('c')
+  AssertEqual LambdaFunc, edit_alternate#rule#get('c', 'test_rule')
+
+Execute (Remove a named rule):
+  let LambdaFunc = {f -> f}
+  call edit_alternate#rule#add('c', LambdaFunc, 'test_rule')
+  call edit_alternate#rule#add('cpp', LambdaFunc, 'test_rule')
+
+  " Using get(..)
+  AssertEqual [LambdaFunc], edit_alternate#rule#get('c')
+  AssertEqual LambdaFunc, edit_alternate#rule#get('c', 'test_rule')
+
+  AssertEqual [LambdaFunc], edit_alternate#rule#get('cpp')
+  AssertEqual LambdaFunc, edit_alternate#rule#get('cpp', 'test_rule')
+
+  " Clear the rule
+  call edit_alternate#rule#clear('c', 'test_rule')
+
+  " Shouldn't be there anymore
+  AssertEqual [], edit_alternate#rule#get('c')
+  AssertEqual v:null, edit_alternate#rule#get('c', 'test_rule')
+
+  AssertEqual [LambdaFunc], edit_alternate#rule#get('cpp')
+  AssertEqual LambdaFunc, edit_alternate#rule#get('cpp', 'test_rule')
+
+  " Test internally that we've removed the reference from our list of rules
+  AssertEqual {}, edit_alternate#rule#__get_names()['c']
+
+  " This shouldn't error
+  AssertEqual v:true, edit_alternate#rule#clear('c', 'test_rule')
+
+Execute (Should be able to add universal rules):
+  " TODO: Implement this test and the actual code.
+  " This will not return a valid file
+  let LambdaFunc = {f -> 'definitely not a file'}
+
+  " This should return a valid file
+  let UniversalFunc = {f -> expand('%:h:p') . '/util.vader'}

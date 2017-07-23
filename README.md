@@ -2,20 +2,62 @@
 
 Quickly edit related / alternate files in vim.
 
+Edit alternate uses the concept of `rules` to decide what the "alternate" file should be. By adding your own rules.
+
+It also has a helper to get you to the file that you "meant" to do :smile:
+
 ## Usage
 
 ### Adding rules
 
-Adding rules will provide more ways to get an alternate file for the one you are currently editting. The plugin will run each rule until it finds one that matches, and then it will choose that one and open the file.
+Adding `rules` will provide more ways to get an alternate file for the one you are currently editing.
+The plugin will run each rule until it finds one that returns an existing filename,
+and then it will choose that one and open the file.
 
 For example:
 
 ```vim
 " Adds a rule to files with the extension "c" to edit the alternative file, ".h"
 call edit_alternate#rule#add('c', {filename -> fnamemodify(filename, ':r') . '.h'})
+
+" Adds a rule to files with the extension ".cpp" to edit the alternative file, ".hpp"
+call edit_alternate#rule#add('cpp', {filename -> fnamemodify(filename, ':r') . '.hpp'})
+
+" You can also add a rule to multiple extensions at once
+" Just use a list of strings, instead of a single string to do so
+call edit_alternate#rule#add(['c', 'cpp'], {filename -> fnamemodify(filename, ':r') . '.h'})
 ```
 
-The rule must be a function that takes one argument, the filename, and then returns a string pointing to the potential alternate file
+The rule must be a function that takes one argument, `filename`, and then returns a string pointing to the potential alternate file. `filename` is guaranteed to be the full path of the current file when running `EditAlternate`.
+
+Rules can be more complicated. This rule checks if there is a header file one folder below the currently edited file. For example, if you were editing `$DIR/src/i2cTask.c` and wanted to switch to `$DIR/include/i2cTask.h`, you could write a rule as follows:
+
+```vim
+call edit_alternate#rule#add('c', {filename ->
+        \ fnamemodify(filename, ':h:h')
+        \ . '/include/'
+        \ . 'fnamemodify(filename, ':t:r') . '.h'
+        \ })
+```
+
+
+#### Named Rules
+
+It is also possible to give your rule a name, so that you can remove it when desired (for example, leaving a certain project directory, you could add an autocmd to remove the file based on `DirChanged`).
+
+The only difference between named and unnamed rules is specifying a `name` parameter at the end of a rule add call. For example:
+
+```vim
+call edit_alternate#rule#add('c', {filename -> fnamemodify(filename, ':r') . '.h'}, 'example_rule')
+```
+
+To remove the rule:
+
+```vim
+call edit_alternate#rule#clear('c', 'example_rule')
+```
+
+And then it won't be evaluated anymore.
 
 ### Current File
 
