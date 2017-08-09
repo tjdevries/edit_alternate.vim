@@ -2,9 +2,9 @@
 
 Quickly edit related / alternate files in vim.
 
-Edit alternate uses the concept of `rules` to decide what the "alternate" file should be. By adding your own rules.
+Edit alternate uses the concept of `rules` to decide what the "alternate" file should be. By adding your own rules, you can configure what the alternate files are.
 
-It also has a helper to get you to the file that you "meant" to do :smile:
+It also has a helper to get you to the file that you "meant" to open :smile:
 
 ## Usage
 
