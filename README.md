@@ -6,6 +6,8 @@ Edit alternate uses the concept of `rules` to decide what the "alternate" file s
 
 It also has a helper to get you to the file that you "meant" to open :smile:
 
+This plugin requires `tjdevries/conf.vim`. You'll want to install that.
+
 ## Usage
 
 ### Adding rules

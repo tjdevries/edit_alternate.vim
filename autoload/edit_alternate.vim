@@ -1,30 +1,3 @@
-" Option configuration {{{
-let s:options = {
-      \ 'file_print': v:true,
-      \ 'debug': v:false,
-      \ }
-
-function! edit_alternate#set_opt_file_print(status) abort
-  let s:options['file_print'] = a:status
-endfunction
-
-function! edit_alternate#set_debug() abort
-    let s:options['debug'] = v:true
-endfunction
-
-function! edit_alternate#set_no_debug() abort
-    let s:options['debug'] = v:false
-endfunction
-
-" The order in which you will open oops files
-let g:edit_alternate_file_list = get(g:, 'edit_alternate_file_list', [
-      \ '.c',
-      \ '.cpp',
-      \ '.h',
-      \ '.py',
-      \ ])
-" }}}
-
 ""
 " Helper function to update the configuration
 function! edit_alternate#update_configuration(option) abort
@@ -46,7 +19,7 @@ function! edit_alternate#switch() abort
       let current_name = Rule(expand('%:p'))
     endif
 
-    if s:options['debug']
+    if edit_alternate#conf#get('defaults', 'debug')
       echo '[EditAlternate] Attempt: ' . current_name
     endif
 
@@ -56,7 +29,7 @@ function! edit_alternate#switch() abort
 
     let alternate_name = current_name
 
-    if s:options['debug']
+    if edit_alternate#conf#get('defaults', 'debug')
       echo '[EditAlternate] Chosen:'
       echo 'Name: ' . alternate_name
       echo 'Bufn: ' . bufnr(alternate_name)
@@ -68,7 +41,7 @@ function! edit_alternate#switch() abort
       execute(':silent edit ' . alternate_name)
     endif
 
-    if s:options['file_print']
+    if edit_alternate#conf#get('defaults', 'file_print')
       file!
     endif
 
@@ -106,7 +79,7 @@ function! edit_alternate#choose_oops(file_list, file_options) abort
     return a:file_list[0]
   endif
 
-  for l:ending in g:edit_alternate_file_list
+  for l:ending in edit_alternate#conf#get('defaults', 'oops_order')
     for l:filename in a:file_list
       if matchstr(l:filename, l:ending . '$') !=# ''
         return l:filename
@@ -124,7 +97,7 @@ function! edit_alternate#fix_oops() abort
         \ )
 
   if len(potential_oops) > 0
-    let l:chosen = edit_alternate#choose_oops(potential_oops, g:edit_alternate_file_list)
+    let l:chosen = edit_alternate#choose_oops(potential_oops, edit_alternate#conf#get('defaults', 'oops_order'))
 
     if l:chosen !=# ''
       if bufnr(substitute(l:chosen, getcwd() . '/', '', 'g')) > 0
