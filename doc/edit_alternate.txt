@@ -1,0 +1,97 @@
+*edit_alternate.txt*    Edit alternate files and other file switching utilities
+
+Author: TJ DeVries
+
+
+================================================================================
+Configuration Options:                                  *edit_alternate-options*
+
+defaults...............................................*edit_alternate.defaults*
+
+
+defaults.file_print                         *edit_alternate.defaults.file_print*
+
+  Type: |Bool|
+  Default: `v:false`
+
+  (Boolean): Whether to print the filename on switching.
+
+  To configure:
+    `call edit_alternate#conf#set("defaults", "file_print", <value>)`
+
+  To view:
+    `call edit_alternate#conf#get("defaults", "file_print")`
+
+
+defaults.enable_default_rules     *edit_alternate.defaults.enable_default_rules*
+
+  Type: |Bool|
+  Default: `v:true`
+
+  (Boolean): Automatically add the default rules provided by the plugin.
+
+  To configure:
+    `call edit_alternate#conf#set("defaults", "enable_default_rules", <value>)`
+
+  To view:
+    `call edit_alternate#conf#get("defaults", "enable_default_rules")`
+
+
+defaults.debug                                   *edit_alternate.defaults.debug*
+
+  Type: |Bool|
+  Default: `v:false`
+
+  (Boolean): Whether to print out debug messages during execution.
+
+  To configure:
+    `call edit_alternate#conf#set("defaults", "debug", <value>)`
+
+  To view:
+    `call edit_alternate#conf#get("defaults", "debug")`
+
+
+defaults.oops_order                         *edit_alternate.defaults.oops_order*
+
+  Type: |List|
+  Default: `['.c', '.cpp', '.h', '.py']`
+
+  (List): A list of the order of oops files to open
+
+  To configure:
+    `call edit_alternate#conf#set("defaults", "oops_order", <value>)`
+
+  To view:
+    `call edit_alternate#conf#get("defaults", "oops_order")`
+
+mappings...............................................*edit_alternate.mappings*
+
+
+mappings.EditAlternate                   *edit_alternate.mappings.EditAlternate*
+
+  Type: |String|
+  Default: `<leader>ea`
+
+  Default mapping for `EditAlternate`. Set to "" to disable mapping
+
+  To configure:
+    `call edit_alternate#conf#set("mappings", "EditAlternate", <value>)`
+
+  To view:
+    `call edit_alternate#conf#get("mappings", "EditAlternate")`
+
+
+mappings.EditOops                             *edit_alternate.mappings.EditOops*
+
+  Type: |String|
+  Default: `<leader>eo`
+
+  Default mapping for `EditOops`. Set to "" to disable mapping
+
+  To configure:
+    `call edit_alternate#conf#set("mappings", "EditOops", <value>)`
+
+  To view:
+    `call edit_alternate#conf#get("mappings", "EditOops")`
+
+" vim: ft=help
