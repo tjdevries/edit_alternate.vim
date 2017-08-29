@@ -11,7 +11,7 @@ This plugin requires `tjdevries/conf.vim`. You'll want to install that.
 ## Install
 
 ```vim
-" I use vim-plug, but translate this to your favorit plugin manager
+" I use vim-plug, but translate this to your favorite plugin manager
 
 " Required: Handles configuration and menu making
 Plug 'tjdevries/conf.vim'
