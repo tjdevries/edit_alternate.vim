@@ -8,6 +8,20 @@ It also has a helper to get you to the file that you "meant" to open :smile:
 
 This plugin requires `tjdevries/conf.vim`. You'll want to install that.
 
+## Install
+
+```vim
+" I use vim-plug, but translate this to your favorit plugin manager
+
+" Required: Handles configuration and menu making
+Plug 'tjdevries/conf.vim'
+" Required: That's this plugin!
+Plug 'tjdevries/edit_alternate.vim'
+
+" Optional: Used for menu creation
+Plug 'skywind3000/quickmenu.vim'
+```
+
 ## Usage
 
 ### Adding rules
