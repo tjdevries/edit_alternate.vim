@@ -14,11 +14,3 @@ command! EditOops :call edit_alternate#fix_oops()
 if edit_alternate#conf#get('defaults', 'enable_default_rules')
   call edit_alternate#rule#default()
 endif
-
-if len(edit_alternate#conf#get('mappings', 'EditAlternate')) > 0
-  call execute(printf('nnoremap %s :EditAlternate<CR>', edit_alternate#conf#get('mappings', 'EditAlternate')))
-endif
-
-if len(edit_alternate#conf#get('mappings', 'EditOops')) > 0
-  call execute(printf('nnoremap %s :EditOops<CR>', edit_alternate#conf#get('mappings', 'EditOops')))
-endif

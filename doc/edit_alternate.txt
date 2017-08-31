@@ -74,6 +74,13 @@ mappings.EditAlternate                   *edit_alternate.mappings.EditAlternate*
 
   Default mapping for `EditAlternate`. Set to "" to disable mapping
 
+  Action:
+>
+       function <lambda>797(def, old, new, ...) closure
+    1  return dict.result(def, old, new)-
+       endfunction
+<
+
   To configure:
     `call edit_alternate#conf#set("mappings", "EditAlternate", <value>)`
 
@@ -88,10 +95,16 @@ mappings.EditOops                             *edit_alternate.mappings.EditOops*
 
   Default mapping for `EditOops`. Set to "" to disable mapping
 
+  Action:
+>
+       function <lambda>818(def, old, new, ...) closure
+    1  return dict.result(def, old, new)-
+       endfunction
+<
+
   To configure:
     `call edit_alternate#conf#set("mappings", "EditOops", <value>)`
 
   To view:
     `call edit_alternate#conf#get("mappings", "EditOops")`
 
-" vim: ft=help

@@ -33,11 +33,13 @@ call conf#add_setting(s:, 'mappings', 'EditAlternate', {
       \ 'default': '<leader>ea',
       \ 'type': v:t_string,
       \ 'description': 'Default mapping for `EditAlternate`. Set to "" to disable mapping',
+      \ 'action': conf#actions#mapping({'rhs': ':EditAlternate<CR>', 'mode': 'n'}),
       \ })
 call conf#add_setting(s:, 'mappings', 'EditOops', {
       \ 'default': '<leader>eo',
       \ 'type': v:t_string,
       \ 'description': 'Default mapping for `EditOops`. Set to "" to disable mapping',
+      \ 'action': conf#actions#mapping({'rhs': ':EditOops<CR>', 'mode': 'n'}),
       \ })
 
 ""
