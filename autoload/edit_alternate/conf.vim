@@ -1,3 +1,11 @@
+if !exists('g:loaded_edit_alternate')
+  runtime! plugin/edit_alternate.vim
+endif
+
+if g:loaded_edit_alternate == v:null
+  echoerr '[edit_alternate] Could not load because of setup issues. Check ":messages"'
+  finish
+endif
 
 " Prefix to use for this autoload file
 let s:autoload_prefix = "edit_alternate#conf"
@@ -5,6 +13,8 @@ let s:autoload_prefix = "edit_alternate#conf"
 " Set the name of name of your plugin.
 " Here is my best guess
 call conf#set_name(s:, 'edit_alternate')
+
+call conf#set_version(s:, [1, 0, 0])
 
 call conf#add_area(s:, 'defaults')
 call conf#add_setting(s:, 'defaults', 'enable_default_rules', {
@@ -84,4 +94,8 @@ endfunction
 " 0
 function! edit_alternate#conf#generate_docs() abort
   return conf#docs#generate(s:, s:autoload_prefix)
+endfunction
+
+function! edit_alternate#conf#__sid()
+  echo matchstr(expand('<sfile>'), '<SNR>\zs\d\+\ze_SID$')
 endfunction

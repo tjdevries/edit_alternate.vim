@@ -1,3 +1,12 @@
+if !exists('g:loaded_edit_alternate')
+  runtime! plugin/edit_alternate.vim
+endif
+
+if g:loaded_edit_alternate == v:null
+  echoerr '[edit_alternate] Could not load because of setup issues. Check ":messages"'
+  finish
+endif
+
 ""
 " Helper function to update the configuration
 function! edit_alternate#update_configuration(option) abort
