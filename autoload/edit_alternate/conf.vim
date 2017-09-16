@@ -9,6 +9,7 @@ endif
 
 " Prefix to use for this autoload file
 let s:autoload_prefix = "edit_alternate#conf"
+let s:autoload_file = expand('<sfile>:p')
 
 " Set the name of name of your plugin.
 " Here is my best guess
@@ -89,13 +90,35 @@ endfunction
 
 
 ""
+" edit_alternate#conf#version
+" Get the version for this plugin
+" Returns a semver dict
+function! edit_alternate#conf#version() abort
+  return conf#get_version(s:)
+endfunction
+
+
+""
 " edit_alternate#conf#generate_docs
 " Returns a list of lines to be placed in your documentation
-" 0
+" Can use :call append(line("%"), func())
 function! edit_alternate#conf#generate_docs() abort
   return conf#docs#generate(s:, s:autoload_prefix)
 endfunction
 
+""
+" edit_alternate#conf#insert_docs
+" Insert the generated docs under where you cursor is
+function! edit_alternate#conf#insert_docs() abort
+  return conf#docs#insert(s:, s:autoload_prefix)
+endfunction
+
 function! edit_alternate#conf#__sid()
-  echo matchstr(expand('<sfile>'), '<SNR>\zs\d\+\ze_SID$')
+  return matchstr(expand('<sfile>'), '<SNR>\zs\d\+\ze_SID$')
+endfunction
+
+""
+" 
+function! edit_alternate#conf#debug() abort
+  return conf#debug(s:)
 endfunction
