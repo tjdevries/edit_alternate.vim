@@ -10,7 +10,7 @@ if !s:has_confvim
   finish
 endif
 
-if !conf#info#require([0, 9, 0])
+if !conf#runtime#require([0, 9, 0])
   echoerr '[EDIT_ALTERNATE] Please update "tjdevries/conf.vim".'
   finish
 endif

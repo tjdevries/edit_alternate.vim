@@ -99,6 +99,15 @@ endfunction
 
 
 ""
+" edit_alternate#conf#require
+" Require a version of this plugin.
+" Returns false if not a high enough version
+function! edit_alternate#conf#require(semver) abort
+  return conf#require_version(s:, a:semver)
+endfunction
+
+
+""
 " edit_alternate#conf#generate_docs
 " Returns a list of lines to be placed in your documentation
 " Can use :call append(line("%"), func())
@@ -118,7 +127,7 @@ function! edit_alternate#conf#__sid()
 endfunction
 
 ""
-" 
+" Print a nice debug statement
 function! edit_alternate#conf#debug() abort
   return conf#debug(s:)
 endfunction

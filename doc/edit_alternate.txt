@@ -76,7 +76,7 @@ mappings.EditAlternate                   *edit_alternate.mappings.EditAlternate*
 
   Action:
 >
-       function <lambda>797(def, old, new, ...) closure
+       function <lambda>315(def, old, new, ...) closure
     1  return dict.result(def, old, new)-
        endfunction
 <
@@ -97,7 +97,7 @@ mappings.EditOops                             *edit_alternate.mappings.EditOops*
 
   Action:
 >
-       function <lambda>818(def, old, new, ...) closure
+       function <lambda>326(def, old, new, ...) closure
     1  return dict.result(def, old, new)-
        endfunction
 <
@@ -108,3 +108,57 @@ mappings.EditOops                             *edit_alternate.mappings.EditOops*
   To view:
     `call edit_alternate#conf#get("mappings", "EditOops")`
 
+
+================================================================================
+Configuration Functions:                              *edit_alternate-functions*
+
+                                                *edit_alternate#conf#version(()*
+edit_alternate#conf#version()
+    Get the version for this plugin
+    Returns a semver dict
+
+                                                    *edit_alternate#conf#set(()*
+edit_alternate#conf#set(area, setting, value)
+    Set a "value" for the "area.setting"
+    See |conf.set_setting|
+
+                                                    *edit_alternate#conf#get(()*
+edit_alternate#conf#get(area, setting)
+    Get the "value" for the "area.setting"
+    See |conf.get_setting}
+
+                                            *edit_alternate#conf#insert_docs(()*
+edit_alternate#conf#insert_docs()
+    Insert the generated docs under where you cursor is
+
+                                                *edit_alternate#conf#require(()*
+edit_alternate#conf#require(semver)
+    Require a version of this plugin.
+    Returns false if not a high enough version
+
+                                                  *edit_alternate#conf#__sid(()*
+edit_alternate#conf#__sid()
+
+                                                  *edit_alternate#conf#debug(()*
+edit_alternate#conf#debug()
+    Print a debug statement containing information about the plugin
+    and the versions of required plugins
+
+                                                   *edit_alternate#conf#view(()*
+edit_alternate#conf#view()
+    View the current configuration dictionary.
+    Useful for debugging
+
+                                                   *edit_alternate#conf#menu(()*
+edit_alternate#conf#menu()
+    Provide the user with an automatic "quickmenu"
+    See |conf.menu|
+
+                                          *edit_alternate#conf#generate_docs(()*
+edit_alternate#conf#generate_docs()
+    Returns a list of lines to be placed in your documentation
+    Can use :call append(line("%"), func())
+
+
+
+ vim:tw=78:ts=2:sts=2:sw=2:ft=help:norl:
